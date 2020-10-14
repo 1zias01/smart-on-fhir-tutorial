@@ -7,7 +7,8 @@ function Deferred() {
 		//need import of PromiseUtils.jsm for example: Cu.import('resource:/gree/modules/PromiseUtils.jsm');
 		return PromiseUtils.defer();
 	} else {
-		/* A method to resolve the associated Promise with the value passed.
+		/* A method to 
+		the associated Promise with the value passed.
 		 * If the promise is already settled it does nothing.
 		 *
 		 * @param {anything} value : This value is used to resolve the promise
@@ -140,7 +141,7 @@ var b64 = '';
 					// use encounter information here. 
 					console.log(encounter);
 				})
-				Promise.allSettled([us, pt, en]).then((results) => ret.resolve(p, smart));
+				Promise.allSettled([us, pt, en]).then((results) => ret.resolve([p, smart]));
 
 			} else {
 				onError();
@@ -204,7 +205,7 @@ var b64 = '';
 		};
 	}
 
-	function sendDocument(data, smart) {
+	function 
 		if ((b64.length) < 2) {
 			alert('Please select a file before trying to send');
 			return;
