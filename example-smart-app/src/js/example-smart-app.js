@@ -148,7 +148,7 @@ var b64 = '';
 		}
 
 		FHIR.oauth2.ready(onReady, onError);
-		// FHIR.oauth2.ready().then(onReady).catch(onError);;
+		// FHIR.oauth2.ready().then(onReady).catch(onError);;ds
 		return ret.promise;
 
 	};
@@ -156,6 +156,7 @@ var b64 = '';
 	function getDocument(data) {
 		var startDate = new Date();
 		startDate.setMinutes(startDate.getMinutes() - 50);
+		debugger;
 		return {
 			resourceType: "DocumentReference",
 			subject: {
@@ -213,14 +214,19 @@ var b64 = '';
 		//	smart.request();
 		$('#getPDF').empty();
 		$('#docStatus').html('<p>Sending Document</p>');
+		
+	
+		debugger;
 		var cr = smart.create(doc)
 		cr.then(response => {
 			console.log(response);
+			debugger;
 			// Get the document reference object 
 			var loc = response.headers.map.location.split('/');
 			var docId = loc[loc.length - 1];
 			var docRef = smart.request(`DocumentReference/${docId}`);
 			docRef.then(docResponse => {
+				debugger;
 				// get the binary now 
 				console.log(docResponse);
 				$('#docStatus').html('<p>Sent</p>');
@@ -236,6 +242,7 @@ var b64 = '';
 				$('#getPDF').html('<p>Fetching Document</p>');
 				binRequest.onreadystatechange = function () {
 					if (this.readyState == 4 && this.status == 200) {
+						debugger;
 						var binResponse = this.responseText;
 						console.log(binResponse);
 
