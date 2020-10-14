@@ -141,7 +141,11 @@ var b64 = '';
 					// use encounter information here. 
 					console.log(encounter);
 				})
-				Promise.allSettled([us, pt, en]).then((results) => ret.resolve([p, smart]));
+				
+				Promise.allSettled([us, pt, en]).then((results) => {
+					debugger;
+					ret.resolve([p, smart]);
+				});
 
 			} else {
 				onError();
