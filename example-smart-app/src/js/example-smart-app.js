@@ -7,8 +7,7 @@ function Deferred() {
 		//need import of PromiseUtils.jsm for example: Cu.import('resource:/gree/modules/PromiseUtils.jsm');
 		return PromiseUtils.defer();
 	} else {
-		/* A method to 
-		the associated Promise with the value passed.
+		/* A method to resolve the associated Promise with the value passed.
 		 * If the promise is already settled it does nothing.
 		 *
 		 * @param {anything} value : This value is used to resolve the promise
@@ -141,9 +140,7 @@ var b64 = '';
 					// use encounter information here. 
 					console.log(encounter);
 				})
-				
-					Promise.allSettled([us, pt, en]).then((results) => ret.resolve([p, smart]));
-				});
+				Promise.allSettled([us, pt, en]).then((results) => ret.resolve([p, smart]));
 
 			} else {
 				onError();
@@ -151,7 +148,7 @@ var b64 = '';
 		}
 
 		FHIR.oauth2.ready(onReady, onError);
-		// FHIR.oauth2.ready().then(onReady).catch(onError);;ds
+		// FHIR.oauth2.ready().then(onReady).catch(onError);;
 		return ret.promise;
 
 	};
@@ -159,7 +156,6 @@ var b64 = '';
 	function getDocument(data) {
 		var startDate = new Date();
 		startDate.setMinutes(startDate.getMinutes() - 50);
-		debugger;
 		return {
 			resourceType: "DocumentReference",
 			subject: {
@@ -207,7 +203,7 @@ var b64 = '';
 		};
 	}
 
-	function 
+	function sendDocument(data, smart) {
 		if ((b64.length) < 2) {
 			alert('Please select a file before trying to send');
 			return;
@@ -217,19 +213,14 @@ var b64 = '';
 		//	smart.request();
 		$('#getPDF').empty();
 		$('#docStatus').html('<p>Sending Document</p>');
-		
-	
-		debugger;
 		var cr = smart.create(doc)
 		cr.then(response => {
 			console.log(response);
-			debugger;
 			// Get the document reference object 
 			var loc = response.headers.map.location.split('/');
 			var docId = loc[loc.length - 1];
 			var docRef = smart.request(`DocumentReference/${docId}`);
 			docRef.then(docResponse => {
-				debugger;
 				// get the binary now 
 				console.log(docResponse);
 				$('#docStatus').html('<p>Sent</p>');
@@ -245,7 +236,6 @@ var b64 = '';
 				$('#getPDF').html('<p>Fetching Document</p>');
 				binRequest.onreadystatechange = function () {
 					if (this.readyState == 4 && this.status == 200) {
-						debugger;
 						var binResponse = this.responseText;
 						console.log(binResponse);
 
