@@ -217,38 +217,39 @@ var b64 = '';
 		cr.then(response => {
 			console.log(response);
 			// Get the document reference object 
-			var loc = response.headers.map.location.split('/');
-			var docId = loc[loc.length - 1];
-			var docRef = smart.request(`DocumentReference/${docId}`);
-			docRef.then(docResponse => {
-				// get the binary now 
-				console.log(docResponse);
-				$('#docStatus').html('<p>Sent</p>');
-				var binaryUrl = docResponse.content[0].attachment.url;
-				var binary = binaryUrl.split("/");
-				var binaryId = binary[binary.length - 1];
+			// Get the document reference object 
+			// var loc = response.headers.map.location.split('/');
+			// var docId = loc[loc.length - 1];
+			// var docRef = smart.request(`DocumentReference/${docId}`);
+			// docRef.then(function(docResponse) {
+			// 	// get the binary now 
+			// 	console.log(docResponse);
+			// 	$('#docStatus').html('<p>Sent</p>');
+			// 	var binaryUrl = docResponse.content[0].attachment.url;
+			// 	var binary = binaryUrl.split("/");
+			// 	var binaryId = binary[binary.length - 1];
 
-				var accessToken = smart.state.tokenResponse.access_token;
-				var binRequest = new XMLHttpRequest();
-				binRequest.open("Get", binaryUrl);
-				binRequest.setRequestHeader("accept", "application/json+fhir");
-				binRequest.setRequestHeader("Authorization", `Bearer ${accessToken}`);
-				$('#getPDF').html('<p>Fetching Document</p>');
-				binRequest.onreadystatechange = function () {
-					if (this.readyState == 4 && this.status == 200) {
-						var binResponse = this.responseText;
-						console.log(binResponse);
+			// 	var accessToken = smart.state.tokenResponse.access_token;
+			// 	var binRequest = new XMLHttpRequest();
+			// 	binRequest.open("Get", binaryUrl);
+			// 	binRequest.setRequestHeader("accept", "application/json+fhir");
+			// 	binRequest.setRequestHeader("Authorization", `Bearer ${accessToken}`);
+			// 	$('#getPDF').html('<p>Fetching Document</p>');
+			// 	binRequest.onreadystatechange = function () {
+			// 		if (this.readyState == 4 && this.status == 200) {
+			// 			var binResponse = this.responseText;
+			// 			console.log(binResponse);
 
-						var link = document.createElement('a');
-						link.innerHTML = 'Download PDF file';
-						link.download = binaryId + '.pdf';
-						link.href = 'data:application/octet-stream;base64,' + JSON.parse(binResponse).data;
-						$('#getPDF').empty();
-						$("#getPDF").append(link);
-					}
-				};
-				binRequest.send();
-			});
+			// 			var link = document.createElement('a');
+			// 			link.innerHTML = 'Download PDF file';
+			// 			link.download = binaryId + '.pdf';
+			// 			link.href = 'data:application/octet-stream;base64,' + JSON.parse(binResponse).data;
+			// 			$('#getPDF').empty();
+			// 			$("#getPDF").append(link);
+			// 		}
+			// 	};
+			// 	binRequest.send();
+			// });
 		});
 	}
 
